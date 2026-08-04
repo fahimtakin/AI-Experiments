@@ -1,35 +1,31 @@
 {
- "manifest_version":3,
-
- "name":"Alfred Take Notes",
-
- "version":"1.0",
-
- "description":
- "Summarize videos and create structured notes",
-
- "permissions":[
-   "activeTab",
-   "storage",
-   "scripting"
- ],
-
- "host_permissions":[
-   "https://www.youtube.com/*"
- ],
-
- "action":{
-   "default_popup":"index.html"
- },
-
- "content_scripts":[
- {
-   "matches":[
+  "manifest_version": 3,
+  "name": "Enterprise Video Intelligence Companion",
+  "version": "1.0.0",
+  "description": "Secure cross-domain presentation engine capturing insights & routing metadata cleanly to endpoints.",
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
     "https://www.youtube.com/*"
-   ],
-   "js":[
-    "content.js"
-   ]
- }
- ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
 }
