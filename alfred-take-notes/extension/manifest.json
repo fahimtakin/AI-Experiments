@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Enterprise Video Intelligence Companion",
+  "name": "Alfred, Take Notes",
   "version": "1.0.0",
-  "description": "Secure cross-domain presentation engine capturing insights & routing metadata cleanly to endpoints.",
+  "description": "Notetaking extension for YouTube videos.",
   "permissions": [
     "sidePanel",
     "activeTab",

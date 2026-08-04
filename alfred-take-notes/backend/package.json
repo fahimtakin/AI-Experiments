@@ -2,7 +2,7 @@
   "name": "alfred-take-notes-backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "Secure enterprise proxy isolation layer for OpenAI and Firebase processing pipelines.",
+  "description": "Secure enterprise proxy isolation layer for Gemini API and Firebase processing pipelines.",
   "main": "server.js",
   "dependencies": {
     "@google/genai": "^2.15.0",

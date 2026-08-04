@@ -4,16 +4,12 @@ let activeVideoMetadata = null;
 async function forceSyncActiveTabContext() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    
-    // Explicit RegExp validation engine matching incoming criteria
     const isYouTubeWatchPage = tab && tab.url && /^https:\/\/(www\.)?youtube\.com\/watch/.test(tab.url);
     
     if (!isYouTubeWatchPage) {
       renderOfflineState();
       return;
     }
-
-    console.log("Synchronizer tracking active validation target URL: ", tab.url);
 
     try {
       await chrome.tabs.sendMessage(tab.id, { action: "ping" });
@@ -58,7 +54,6 @@ function disableActionControls(state) {
   document.getElementById("action-save").disabled = state;
 }
 
-// Background script messenger port setup
 try {
   const port = chrome.runtime.connect({ name: "intelligence-sidepanel-pipe" });
   port.onMessage.addListener((message) => {
@@ -71,15 +66,14 @@ try {
     }
   });
 } catch (e) {
-  console.warn("Pipe connection delayed.");
+  console.warn("Pipe link deferred.");
 }
 
-// Execution stream pipeline connector
 document.getElementById("action-summarize").addEventListener("click", async () => {
   if (!activeVideoMetadata) return;
   
   const outputArea = document.getElementById("output-area");
-  outputArea.innerText = "Connecting to backend engine... Processing transcript segments via OpenAI Pipeline...";
+  outputArea.innerText = "Connecting to backend engine... Processing transcript segments via Gemini AI Pipeline...";
 
   try {
     const response = await fetch(`${BACKEND_ENDPOINT}/summarize`, {
@@ -91,13 +85,13 @@ document.getElementById("action-summarize").addEventListener("click", async () =
     const parsedData = await response.json();
     if (parsedData.error) throw new Error(parsedData.error);
 
+    // FIX: Swapped to innerText to prevent raw HTML rendering and map spacing text perfectly
     outputArea.innerText = parsedData.summary;
   } catch (err) {
     outputArea.innerText = `Pipeline Network Error: ${err.message}`;
   }
 });
 
-// Secure server container database connection pipeline
 document.getElementById("action-save").addEventListener("click", async () => {
   if (!activeVideoMetadata) return;
 
@@ -135,7 +129,5 @@ document.getElementById("action-save").addEventListener("click", async () => {
   setTimeout(() => { statusDisplay.innerText = ""; }, 4000);
 });
 
-// Run immediate checks on boot load
 forceSyncActiveTabContext();
-// Dynamic poller loop checking for modifications every 2 seconds cleanly
 setInterval(forceSyncActiveTabContext, 2000);
